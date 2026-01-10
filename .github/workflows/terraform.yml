@@ -1,9 +1,12 @@
 name: Terraform Azure
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      confirm_apply:
+        description: 'Type "yes" to approve Terraform apply'
+        required: true
+        default: 'no'
 
 jobs:
   terraform:
@@ -28,5 +31,12 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
+      - name: Confirm Apply
+        if: ${{ github.event.inputs.confirm_apply != 'yes' }}
+        run: |
+          echo "Terraform apply not confirmed. Exiting."
+          exit 1
+
       - name: Terraform Apply
+        if: ${{ github.event.inputs.confirm_apply == 'yes' }}
         run: terraform apply -auto-approve
