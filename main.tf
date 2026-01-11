@@ -7,8 +7,8 @@ terraform {
     }
 
     backend "azurerm" {
-      resource_group_name  = "rg-tf-vm-lab"
-      storage_account_name = "tftate123xyz"
+      resource_group_name  = "storageA"
+      storage_account_name = "khablob1"
       container_name       = "tfstate"
       key                  = "vm-lab/terraform.tfstate"
   }
